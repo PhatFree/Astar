@@ -13,7 +13,7 @@ public class Node {
     //Our pancake stack
     private int stack[];
 
-    public Node(int stack[], int cost, Node parent){
+    private Node(int stack[], int cost, Node parent){
     //constructor
         this.cost = cost;
         this.stack = stack;
@@ -34,17 +34,25 @@ public class Node {
 
 
     private int[] flipBreakpoint(int start, int end){
-        //True means there is a break point
+        //create a temp array and flip it
         int tempStack[] = stack;
         for (int i = start; i < tempStack[(end-start)/2]; i++) {
             int temp = tempStack[i];
             tempStack[i] = tempStack[end-i];
-                tempStack[end-i] = temp;
+            tempStack[end-i] = temp;
         }
         return tempStack;
 
     }
 
+    public boolean isBreak(int index){
+        //The breakpoint is after the number at the index.
+        return false;
+    }
+
+    private int countBreakpoint(){
+        return 0;
+    }
 
     void setNumBreakpoint(int i){ numBreakpoint = i;}
     int getNumBreakpoint(){ return numBreakpoint; }
