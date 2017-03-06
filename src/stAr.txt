@@ -1,0 +1,46 @@
+
+Procedure A*:
+
+    Input: initial node s
+
+	f(x)	: evaluation of solution cost for node x
+	h(x)	: heuristic analysis of node x
+	g(x)	: incurred cost up until node x
+	w(u,v)	: cost of movement from node u to node v
+
+	closed_set = {}
+	open_set = {s}
+	f(s) = h(s)
+
+	while open_set not empty
+		remove node u from open (pick u with lowest f() )
+		insert u into closed set
+
+		if u is goal node
+			return path to u
+		generate successors of u
+		for each node v in successors
+			Improve(u, v)
+
+	return 0 for no solution
+
+Procedure Improve
+
+    Input: node u, node v
+	
+	// v generated already but not yet expanded, and this is a better path
+	if (v is in open) and (g(u) + w(u,v) < g(v))
+		set (parent of v) = u
+		set f(v) = g(u) + w(u,v) + h(v)  // update solution estimate
+	// v already expanded, this is a better path
+	else if (v is in closed) and (g(u) + w(u,v) < g(v))
+		set (parent of v) = u
+		set f(v) = g(u) + w(u,v) + h(v)  // update solution estimate
+		remove v from closed
+		add v to open
+	// v not seen before
+		set (parent of v) = u
+		set f(v) = g(u) + w(u,v) + h(v)  // set solution estimate
+		add v to open
+		
+
