@@ -23,6 +23,9 @@ public class Main {
 	try {
 	    in = new Scanner(new FileReader(in_filename));
 	    size = in.nextInt();
+	    if (size == 0) {
+		// TODO print & exit
+	    }
 	    cakes = new int[size];
 	    for (int i = 0; i < size; i++) {
 		cakes[i] = in.nextInt();
@@ -34,7 +37,7 @@ public class Main {
 	} catch (InputMismatchException e) {
 	    e.printStackTrace();
 	    System.out.println("Error: input improperly formatted");
-	    System.exit(1);
+	    System.exit(2);
 	}
 
 	System.out.print("The list:");
@@ -45,6 +48,7 @@ public class Main {
 	//create root node
 	Node root = new Node(cakes,size,null);
 
+	// TODO move to AStar?
         PriorityQueue<Node> Astar = new PriorityQueue<>(new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
@@ -53,8 +57,9 @@ public class Main {
         });
 
 	// do the A* search
+	seeker.search(root);
 	// write the output to out_file
-	// 	sequence of reversals to complete the sort
+	// 	sequence of reversals to complete the sort (aka the path)
 	//	number of nodes expanded in the search
 	//		(aka nodes deleted from the OPEN set)
     }
