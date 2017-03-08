@@ -3,12 +3,13 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
+import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) {
         // initialize data structure
-	String in_filename = "input.txt";
+	String in_filename = "src/input.txt";
 	String out_filename = "output.txt";
 
 	if (args.length > 0)
@@ -43,8 +44,11 @@ public class Main {
 	    System.out.print(" " + cakes[i]);
 	System.out.println();
 
-	// create root node
+	//create root node
+	Node root = new Node(cakes,size,null);
+
 	// do the A* search
+
 	// write the output to out_file
 	// 	sequence of reversals to complete the sort
 	//	number of nodes expanded in the search

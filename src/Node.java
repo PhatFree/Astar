@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Properties;
 
 /**
  * Created by jeffdev on 3/3/17.
@@ -13,7 +15,7 @@ public class Node {
     //Our pancake stack
     private int stack[];
 
-    private Node(int stack[], int cost, Node parent){
+    public Node(int stack[], int cost, Node parent){
     //constructor
         this.cost = cost;
         this.stack = stack;
@@ -22,15 +24,16 @@ public class Node {
 
     }
 
-    public ArrayList genChildren(){
-        ArrayList<Node> children = new ArrayList<Node>();
+
+    public PriorityQueue<Node> genChildren(){
+        PriorityQueue<Node> children = new PriorityQueue<Node>();
 
         for (int i = 0; i < stack.length - 2; i++)
             for ( int j = i; j <stack.length - 2 ; j++)
                 if(stack[j] > stack[j+1])
                     children.add(new Node(flipBreakpoint(i,j),cost+1,this));
         return children;
-    };
+    }
 
 
     private int[] flipBreakpoint(int start, int end){
@@ -47,14 +50,17 @@ public class Node {
 
     public boolean isBreak(int index){
         //The breakpoint is after the number at the index.
-        return false;
+        if (stack[index+1] == stack[index]+1 || stack[index+1] == stack[index]-1 )
+            return false;
+        setNumBreakpoint(1);
+        return true;
     }
 
     private int countBreakpoint(){
         return 0;
     }
 
-    void setNumBreakpoint(int i){ numBreakpoint = i;}
+    void setNumBreakpoint(int i){ numBreakpoint += i;}
     int getNumBreakpoint(){ return numBreakpoint; }
     int[] getStack(){ return stack; }
     Node getParent(){return parent;}
