@@ -1,9 +1,7 @@
 import java.io.FileReader;
-import java.util.Scanner;
+import java.util.*;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.InputMismatchException;
-import java.util.Set;
 
 public class Main {
 
@@ -47,8 +45,14 @@ public class Main {
 	//create root node
 	Node root = new Node(cakes,size,null);
 
-	// do the A* search
+        PriorityQueue<Node> Astar = new PriorityQueue<>(new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                return ((Node) o1).getCost() - ((Node) o2).getCost();
+            }
+        });
 
+	// do the A* search
 	// write the output to out_file
 	// 	sequence of reversals to complete the sort
 	//	number of nodes expanded in the search

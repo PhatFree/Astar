@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Properties;
 
@@ -26,8 +27,12 @@ public class Node {
 
 
     public PriorityQueue<Node> genChildren(){
-        PriorityQueue<Node> children = new PriorityQueue<Node>();
-
+        PriorityQueue<Node> children = new PriorityQueue<>(new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                return ((Node) o1).getCost() - ((Node) o2).getCost();
+            }
+        });
         for (int i = 0; i < stack.length - 2; i++)
             for ( int j = i; j <stack.length - 2 ; j++)
                 if(stack[j] > stack[j+1])
@@ -62,6 +67,7 @@ public class Node {
 
     void setNumBreakpoint(int i){ numBreakpoint += i;}
     int getNumBreakpoint(){ return numBreakpoint; }
+    int getCost(){ return cost;}
     int[] getStack(){ return stack; }
     Node getParent(){return parent;}
 
