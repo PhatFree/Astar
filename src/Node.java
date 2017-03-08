@@ -21,7 +21,7 @@ public class Node {
         this.cost = cost;
         this.stack = stack;
         this.parent = parent;
-
+        countBreakpoint();
 
     }
 
@@ -33,6 +33,7 @@ public class Node {
                 return ((Node) o1).getCost() - ((Node) o2).getCost();
             }
         });
+        // TODO fix this loop, or something
         for (int i = 0; i < stack.length - 2; i++)
             for ( int j = i; j <stack.length - 2 ; j++)
                 if(stack[j] > stack[j+1])
@@ -57,15 +58,25 @@ public class Node {
         //The breakpoint is after the number at the index.
         if (stack[index+1] == stack[index]+1 || stack[index+1] == stack[index]-1 )
             return false;
-        setNumBreakpoint(1);
         return true;
     }
 
-    private int countBreakpoint(){
-        return 0;
+    private void countBreakpoint(){
+        //find out how many break points we have
+        for (int i = 0; i < stack.length-1;i++)
+            if (isBreak(i))
+                numBreakpoint++;
+
     }
 
-    void setNumBreakpoint(int i){ numBreakpoint += i;}
+    public boolean isGoal()
+    {// if the array is in ascending order return true
+        for (int i = 0; i < stack.length-1;i++)
+            if(stack[i] > stack[i+1])
+                return false;
+        return true;
+    }
+
     int getNumBreakpoint(){ return numBreakpoint; }
     int getCost(){ return cost;}
     int[] getStack(){ return stack; }

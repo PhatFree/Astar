@@ -1,15 +1,34 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Properties;
+
 
 public class AStar
 {
 
     // TODO moar vars
     private int numNodesExpanded;  // number of nodes removed from open set
+    PriorityQueue<Node> openSet;
+    PriorityQueue<Node> closedSet;
 
     public AStar()
     {
 	// init open set as empty
-	// init closed set as empty
-	;
+        openSet = new PriorityQueue<>(new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                return ((Node) o1).getCost() - ((Node) o2).getCost();
+            }
+        });
+
+        // init closed set as empty
+        closedSet = new PriorityQueue<>(new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                return ((Node) o1).getCost() - ((Node) o2).getCost();
+            }
+        });
     }
 
 
@@ -18,22 +37,28 @@ public class AStar
      * Executes an A* search, beginning at the source Node and seeking a Node
      * that satisfies the isGoal requirement.
      */
-    public void search(Node source)
+    public boolean search(Node source)
     {
-	// TODO return type
-	// source node f (full analysis) is weight=0 + heuristic 
-	// add source to open set
-	// while open set isn't empty
+	    // TODO return type
+	    // source node f (full analysis) is weight=0 + heuristic
+	    // add source to open set
+        openSet.add(source);
+	    // while open set isn't empty
 		// get n = most smol element from open set
+        Node temp = openSet.poll();
 		// (add n to closed set)
+        closedSet.add(temp);
 
 		// if n is a goal node
-			// return n or path to n or whatever we return
-		// generate successors of n
-		// for each successor k
+        if(temp.isGoal())
+        {    // return n or path to n or whatever we return
+        }
+        openSet.addAll(temp.genChildren());    // generate successors of n
+		    // for each successor k
 			// improve ( n, k )
-
-	return null;  // no solution found
+    if (openSet.isEmpty())
+        return false;
+	return false;  // no solution found
     }
 
 
@@ -71,4 +96,6 @@ public class AStar
 	/*TODO return type*/
 	return null;
     }
+
+
 }
