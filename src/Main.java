@@ -7,55 +7,56 @@ public class Main {
 
     public static void main(String[] args) {
         // initialize data structure
-	    String in_filename = "src/input.txt";
-	    String out_filename = "output.txt";
+        String in_filename = "src/input.txt";
+//        String in_filename = "src/input_case1.txt";
+        String out_filename = "src/output.txt";
 
         if (args.length > 0)
-	      in_filename = args[0];
-	    if (args.length > 1)
-    	    out_filename = args[1];
-    	System.out.println("source file: " + in_filename);
-    	System.out.println("output file: " + out_filename);
-	
-    	int size = 0;
-    	int cakes[] = {};
-    	Scanner in = null;
-    	try {
-	    in = new Scanner(new FileReader(in_filename));
-	    size = in.nextInt();
-	    if (size == 0) {
-		// TODO print & exit
-	    }
+            in_filename = args[0];
+        if (args.length > 1)
+            out_filename = args[1];
+        System.out.println("source file: " + in_filename);
+        System.out.println("output file: " + out_filename);
 
-	    cakes = new int[size];
-	    for (int i = 0; i < size; i++) {
-		    cakes[i] = in.nextInt();
+        int size = 0;
+        int cakes[] = {};
+        Scanner in = null;
+        try {
+            in = new Scanner(new FileReader(in_filename));
+            size = in.nextInt();
+            if (size == 0) {
+                // TODO print & exit
             }
-    	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	        System.out.println("Error: failed to open file");
-	        System.exit(1);
-	        } catch (InputMismatchException e) {
-	        e.printStackTrace();
-	        System.out.println("Error: input improperly formatted");
-	        System.exit(2);
-	    }
 
-	    System.out.print("The list:");
+            cakes = new int[size];
+            for (int i = 0; i < size; i++) {
+                cakes[i] = in.nextInt();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error: failed to open file");
+            System.exit(1);
+        } catch (InputMismatchException e) {
+            e.printStackTrace();
+            System.out.println("Error: input improperly formatted");
+            System.exit(2);
+        }
+
+        System.out.print("The list:");
         for (int i = 0; i < size; i++)
             System.out.print(" " + cakes[i]);
         System.out.println();
 
-	    //create root node
-	    Node root = new Node(cakes,size,null);
+        //create root node
+        Node root = new Node(cakes, size, null);
 
-	    // do the A* search
+        // do the A* search
         AStar seeker = new AStar();
         seeker.search(root);
 
-	    // write the output to out_file
-	    // 	sequence of reversals to complete the sort (aka the path)
-	    //	number of nodes expanded in the search
-	    //		(aka nodes deleted from the OPEN set)
+        // write the output to out_file
+        // 	sequence of reversals to complete the sort (aka the path)
+        //	number of nodes expanded in the search
+        //		(aka nodes deleted from the OPEN set)
     }
 }
