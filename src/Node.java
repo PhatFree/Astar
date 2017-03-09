@@ -27,11 +27,11 @@ public class Node {
         // TODO fix this loop, or something
         for (int i = 0; i < stack.length - 1; i++)
             if (isBreak(i) || i == 0)
-                for (int j = i + 1; j < stack.length - 1; j++)
+                for (int j = i + 1; j < stack.length ; j++)
                     if (isBreak(j) || j == stack.length - 1)
                         children.add(new Node(flipBreakpoint(i, j), cost + 1, this));
-        System.out.println("\tChildren of: " + this);
-        System.out.println("\t"+children);
+        if(AStar.DEBUG)System.out.println("\tChildren of: " + this);
+        if(AStar.DEBUG)System.out.println("\t" + children);
         return children;
     }
 
@@ -49,7 +49,7 @@ public class Node {
 
     private boolean isBreak(int index) {
         //The breakpoint is after the number at the index.
-        if (index < 0 || index >= stack.length)
+        if (index < 0 || index >= stack.length-1)
             return false;
         if (stack[index + 1] == stack[index] + 1)// || stack[index + 1] == stack[index] - 1)
             return false;
@@ -59,7 +59,7 @@ public class Node {
     private void countBreakpoints() {
         //find out how many break points we have
         numBreakpoints = 0;
-        for (int i = 0; i < stack.length-1; i++)
+        for (int i = 0; i < stack.length - 1; i++)
             if (isBreak(i))
                 numBreakpoints++;
     }
@@ -74,7 +74,7 @@ public class Node {
 
     // Analysis of worthiness. Cost incurred so far + heuristic estimate of goal
     public int analysis() {
-        return numBreakpoints + cost;
+        return cost + numBreakpoints;
     }
 
     int getNumBreakpoints() { return numBreakpoints; }

@@ -5,6 +5,8 @@ import java.util.PriorityQueue;
 
 public class AStar {
 
+    static final boolean DEBUG = false;
+
     private int numNodesExpanded;  // number of nodes removed from open set
     private PriorityQueue<Node> openSet;
     private PriorityQueue<Node> closedSet;
@@ -43,14 +45,22 @@ public class AStar {
             // get n = smallest element from open set
             Node temp = openSet.poll();
             numNodesExpanded++;
-            System.out.println("Expanding node: " + temp);
+            if(DEBUG)System.out.println("Expanding node: " + temp);
 
             // (add n to closed set)
             closedSet.add(temp);
 
             if (temp.isGoal()) {
                 // return n or path to n or whatever we return
-                System.out.println("Found goal node! " + numNodesExpanded + " expansion to reach.");
+                System.out.println("Found goal node! " + numNodesExpanded + " expansions to reach.");
+                int reversals = 0;
+                // TODO not this
+                while (temp != null) {
+                    System.out.println(temp);
+                    temp = temp.getParent();
+                    reversals++;
+                }
+                System.out.println(reversals-1 + " reversals");
                 return true;
             }
             // generate successors of n
@@ -72,7 +82,7 @@ public class AStar {
         // 'to' generated already but not yet expanded, and this is a better path
         if (openSet.contains(to)) {
             if (from.getCost() + 1/*+ w(from, to)*/ < to.getCost()) {
-                System.out.println("Found better path to an open node");
+                if(DEBUG)System.out.println("Found better path to an open node");
                 to.setParent(from);
                 // set f (to) = from.getCost() + w(from, to) + h(to)  // update solution estimate
                 to.setCost(from.getCost() + 1/*w(from, to)*/);
@@ -81,7 +91,7 @@ public class AStar {
         // 'to' already expanded, but this is a better path
         else if (closedSet.contains(to)) {
             if (from.getCost() + 1/*+ w(from, to)*/ < to.getCost()) {
-                System.out.println("Found better path to a closed node");
+                if(DEBUG)System.out.println("Found better path to a closed node");
                 to.setParent(from);
                 // set f (to) = from.getCost() + w(from, to) + h(to)  // update solution estimate
                 closedSet.remove(to);
@@ -90,7 +100,7 @@ public class AStar {
         }
         // 'to' not seen before
         else {
-            System.out.println("New node discovered!");
+            if(DEBUG)System.out.println("New node discovered!");
             to.setParent(from);
             // set f (to) = from.getCost() + w(from, to) + h(to)  // set solution estimate
             openSet.add(to);

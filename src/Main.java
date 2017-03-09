@@ -7,8 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
         // initialize data structure
-        String in_filename = "src/input.txt";
-//        String in_filename = "src/input_case1.txt";
+//        String in_filename = "src/input.txt";
+        String in_filename = "src/input_case1.txt";
         String out_filename = "src/output.txt";
 
         if (args.length > 0)
