@@ -1,33 +1,26 @@
 import java.io.FileReader;
 import java.util.*;
-import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class Main {
 
     public static void main(String[] args) {
         // initialize data structure
-//        String in_filename = "src/input.txt";
-        String in_filename = "src/input_case1.txt";
-        String out_filename = "src/output.txt";
+        String in_filename = "src/input_case3.txt";
 
         if (args.length > 0)
             in_filename = args[0];
-        if (args.length > 1)
-            out_filename = args[1];
         System.out.println("source file: " + in_filename);
-        System.out.println("output file: " + out_filename);
 
         int size = 0;
         int cakes[] = {};
-        Scanner in = null;
+        Scanner in;
         try {
             in = new Scanner(new FileReader(in_filename));
             size = in.nextInt();
             if (size == 0) {
-                // TODO print & exit
+                System.out.println("Error: input size is zero");
             }
-
             cakes = new int[size];
             for (int i = 0; i < size; i++) {
                 cakes[i] = in.nextInt();
@@ -38,7 +31,8 @@ public class Main {
             System.exit(1);
         } catch (InputMismatchException e) {
             e.printStackTrace();
-            System.out.println("Error: input improperly formatted");
+            System.out.println("Error: input improperly formatted. " +
+                    "Requires an integer length followed by #length integers");
             System.exit(2);
         }
 
@@ -52,11 +46,18 @@ public class Main {
 
         // do the A* search
         AStar seeker = new AStar();
-        seeker.search(root);
+        Node goal = seeker.search(root);
+        System.out.println();
 
-        // write the output to out_file
-        // 	sequence of reversals to complete the sort (aka the path)
-        //	number of nodes expanded in the search
-        //		(aka nodes deleted from the OPEN set)
+        if (goal == null)
+            System.out.println("No solution found");
+        else {
+            ArrayList<Node> path = goal.getPath();
+            System.out.println("Path from root to goal:");
+            for (Node node : path) {
+                System.out.println(node);
+            }
+            System.out.println("Total Number of Reversals: " + (path.size() - 1));
+        }
     }
 }

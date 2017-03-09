@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 /**
@@ -24,14 +25,11 @@ public class Node {
 
     public ArrayList<Node> genChildren() {
         ArrayList<Node> children = new ArrayList<>();
-        // TODO fix this loop, or something
         for (int i = 0; i < stack.length - 1; i++)
             if (isBreak(i) || i == 0)
-                for (int j = i + 1; j < stack.length ; j++)
+                for (int j = i + 1; j < stack.length; j++)
                     if (isBreak(j) || j == stack.length - 1)
                         children.add(new Node(flipBreakpoint(i, j), cost + 1, this));
-        if(AStar.DEBUG)System.out.println("\tChildren of: " + this);
-        if(AStar.DEBUG)System.out.println("\t" + children);
         return children;
     }
 
@@ -49,7 +47,7 @@ public class Node {
 
     private boolean isBreak(int index) {
         //The breakpoint is after the number at the index.
-        if (index < 0 || index >= stack.length-1)
+        if (index < 0 || index >= stack.length - 1)
             return false;
         if (stack[index + 1] == stack[index] + 1)// || stack[index + 1] == stack[index] - 1)
             return false;
@@ -73,8 +71,8 @@ public class Node {
     }
 
     // Analysis of worthiness. Cost incurred so far + heuristic estimate of goal
-    public int analysis() {
-        return cost + numBreakpoints;
+    public double analysis() {
+        return cost + numBreakpoints / 2.;
     }
 
     int getNumBreakpoints() { return numBreakpoints; }
@@ -83,18 +81,24 @@ public class Node {
 
     void setCost(int cost) { this.cost = cost; }
 
-    int[] getStack() { return stack; }
-
-    Node getParent() { return parent; }
-
     void setParent(Node parent) { this.parent = parent; }
+
+    public ArrayList<Node> getPath() {
+        ArrayList<Node> path;
+        if (parent == null)
+            path = new ArrayList<>();
+        else
+            path = parent.getPath();
+        path.add(this);
+        return path;
+    }
 
     @Override
     public String toString() {
-        String str = numBreakpoints + ":[";
+        String str ="";
         for (int x : stack)
-            str += x + ", ";
-        return str.substring(0, str.length() - 2) + "]";
+            str += x + " ";
+        return str.trim();
     }
 
     @Override
