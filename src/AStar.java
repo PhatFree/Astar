@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 
 public class AStar {
@@ -41,6 +43,7 @@ public class AStar {
         while (!openSet.isEmpty()) {
             // get n = smallest element from open set
             Node n = openSet.poll();
+            System.out.println("Expanding node "+n+" (cost: " + n.analysis() + ")");
             closedSet.add(n);
 
             if (n.isGoal()) {
@@ -61,32 +64,49 @@ public class AStar {
      * nodes from and to.
      */
     private void improve(Node from, Node to) {
+        System.out.print(to);
+        //System.out.print("improve subroutine:");
         // 'to' generated already but not yet expanded, and this is a better path
         if (openSet.contains(to)) {
             if (from.getCost() + 1/*w(from, to)*/ < to.getCost()) {
-                to.setParent(from);
+                System.out.print("\tupdating element in openset");
+                if (!openSet.remove(to)) {
+                    System.out.println("Error locating element");
+                    System.exit(3);
+                }
+//                to.setParent(from);
                 // set f (to) = from.getCost() + w(from, to) + h(to)
-                to.setCost(from.getCost() + 1/*w(from, to)*/);  // update solution estimate
+//                to.setCost(from.getCost() + 1/*w(from, to)*/);  // update solution estimate
+
+                // update openSet's 'to'
+                openSet.add(to);
             }
         }
         // 'to' already expanded, but this is a better path
         else if (closedSet.contains(to)) {
             if (from.getCost() + 1/*w(from, to)*/ < to.getCost()) {
-                to.setParent(from);
+                System.out.print("\tupdating element in closedset");
+//                "Removed closed element with cost: " + to.
+//                to.setParent(from);
                 // set f (to) = from.getCost() + w(from, to) + h(to)
-                to.setCost(from.getCost() + 1/*w(from, to)*/);  // update solution estimate
+//                to.setCost(from.getCost() + 1/*w(from, to)*/);  // update solution estimate
 
-                closedSet.remove(to);
+                if (!closedSet.remove(to)) {
+                    System.out.println("Error locating element");
+                    System.exit(4);
+                }
                 openSet.add(to);
             }
         }
         // 'to' not seen before
         else {
-            to.setParent(from);
+            System.out.print("\tnew element");
+//            to.setParent(from);
             // set f (to) = from.getCost() + w(from, to) + h(to)
-            to.setCost(from.getCost() + 1/*w(from, to)*/);  // set solution estimate
+//            to.setCost(from.getCost() + 1/*w(from, to)*/);  // set solution estimate
             openSet.add(to);
         }
+        System.out.println("");
     }
 
 

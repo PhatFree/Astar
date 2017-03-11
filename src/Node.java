@@ -49,7 +49,7 @@ public class Node {
         //The breakpoint is after the number at the index.
         if (index < 0 || index >= stack.length - 1)
             return false;
-        if (stack[index + 1] == stack[index] + 1)// || stack[index + 1] == stack[index] - 1)
+        if (stack[index + 1] == stack[index] + 1 || stack[index + 1] == stack[index] - 1)
             return false;
         return true;
     }
@@ -64,6 +64,9 @@ public class Node {
 
 
     public boolean isGoal() {// if the array is in ascending order return true
+
+        if (numBreakpoints > 0)
+                    return false;
         for (int i = 0; i < stack.length - 1; i++)
             if (stack[i] > stack[i + 1])
                 return false;
@@ -72,16 +75,16 @@ public class Node {
 
     // Analysis of worthiness. Cost incurred so far + heuristic estimate of goal
     public double analysis() {
-        return cost + numBreakpoints / 2.;
+        return cost + numBreakpoints; // 2.0);
     }
 
-    int getNumBreakpoints() { return numBreakpoints; }
+    //int getNumBreakpoints() { return numBreakpoints; }
 
     int getCost() { return cost; }
 
-    void setCost(int cost) { this.cost = cost; }
+    //void setCost(int cost) { this.cost = cost; }
 
-    void setParent(Node parent) { this.parent = parent; }
+    //void setParent(Node parent) { this.parent = parent; }
 
     public ArrayList<Node> getPath() {
         ArrayList<Node> path;

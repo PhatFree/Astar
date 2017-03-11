@@ -1,12 +1,14 @@
-import java.io.FileReader;
-import java.util.*;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         // initialize data structure
-        String in_filename = "src/input_case3.txt";
+        String in_filename = "src/input_test2.txt";
 
         if (args.length > 0)
             in_filename = args[0];
@@ -26,11 +28,9 @@ public class Main {
                 cakes[i] = in.nextInt();
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             System.out.println("Error: failed to open file");
             System.exit(1);
         } catch (InputMismatchException e) {
-            e.printStackTrace();
             System.out.println("Error: input improperly formatted. " +
                     "Requires an integer length followed by #length integers");
             System.exit(2);
@@ -42,7 +42,7 @@ public class Main {
         System.out.println();
 
         //create root node
-        Node root = new Node(cakes, size, null);
+        Node root = new Node(cakes, 0, null);
 
         // do the A* search
         AStar seeker = new AStar();
@@ -61,3 +61,14 @@ public class Main {
         }
     }
 }
+
+/*
+OUTPUT TEST 1:
+
+
+OUTPUT TEST 2:
+
+OUTPUT TEST 3:
+
+
+ */
