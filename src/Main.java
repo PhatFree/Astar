@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         // initialize data structure
-        String in_filename = "src/input_test2.txt";
+        String in_filename = "inputs/input.txt";
 
         if (args.length > 0)
             in_filename = args[0];
@@ -61,14 +61,3 @@ public class Main {
         }
     }
 }
-
-/*
-OUTPUT TEST 1:
-
-
-OUTPUT TEST 2:
-
-OUTPUT TEST 3:
-
-
- */
